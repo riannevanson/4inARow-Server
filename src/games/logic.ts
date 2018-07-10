@@ -41,6 +41,7 @@ export const isValidTransition = (
 
 export const calculateWinner = (board:Board): Symbol | null => {
   console.log('calculate winner new')
+  // Check rows
   for (let r=0;r<board.length;r++) {
     let playSymbol=board[r][0]
     let adjSymbols=1
@@ -58,9 +59,9 @@ export const calculateWinner = (board:Board): Symbol | null => {
       }
     }
   }
-
   console.log('no row winner')
 
+  // Check columns
   for (let c=0;c<board[0].length;c++) {
     let playSymbol=board[0][c]
     let adjSymbols=1
@@ -78,8 +79,57 @@ export const calculateWinner = (board:Board): Symbol | null => {
       }
     }
   }
-
   console.log('no col winner')
+
+  // Check diagonals left to right row 0 to 2
+  for (let r=0;r<=board.length-4;r++) {
+    let playSymbol=board[r][0]
+    let adjSymbols=1
+    for (let c=1;c<=board[0].length-4;c++) {
+      if (board[r+c][c] && board[r+c][c] === playSymbol) {
+        adjSymbols++
+        console.log(r+c,'row')
+        console.log(c,'col')
+        console.log(playSymbol,'playSymbol')
+        console.log(adjSymbols,'adjSymbols')
+        if (adjSymbols === 4) {
+          console.log('diagonal winner ltr')
+          return board[r+c][c]
+        }
+      }
+      else {
+        playSymbol=board[r+c][c]
+        adjSymbols=1
+      }
+    }
+  }
+
+  // Check diagonals left to right col 1 to 3
+  for (let c=1;c<=board[0].length-4;c++) {
+    let playSymbol=board[0][c]
+    let adjSymbols=1
+    for (let r=1;r<=board.length-4;r++) {
+      if (board[r][r+c] && board[r][r+c] === playSymbol) {
+        adjSymbols++
+        console.log(r,'row')
+        console.log(r+c,'col')
+        console.log(playSymbol,'playSymbol')
+        console.log(adjSymbols,'adjSymbols')
+        if (adjSymbols === 4) {
+          console.log('diagonal winner ltr')
+          return board[r][r+c]
+        }
+      }
+      else {
+        playSymbol=board[r][r+c]
+        adjSymbols=1
+      }
+    }
+  }
+
+  console.log('no diagonal winner')
+
+  // No winner
   return null
 }
 
