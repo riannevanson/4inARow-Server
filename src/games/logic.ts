@@ -39,7 +39,51 @@ export const isValidTransition = (
   );
 };
 
-export const calculateWinner = (board: Board): Symbol | null =>
+export const calculateWinner = (board:Board): Symbol | null => {
+  console.log('calculate winner new')
+  for (let r=0;r<board.length;r++) {
+    let playSymbol=board[r][0]
+    let adjSymbols=1
+    for (let c=1;c<board[0].length;c++) {
+      if (board[r][c] && board[r][c] === playSymbol) {
+        adjSymbols++
+        if (adjSymbols === 4) {
+          console.log('row winner')
+          return board[r][c]
+        }
+      }
+      else {
+        playSymbol=board[r][c]
+        adjSymbols=1
+      }
+    }
+  }
+
+  console.log('no row winner')
+
+  for (let c=0;c<board[0].length;c++) {
+    let playSymbol=board[0][c]
+    let adjSymbols=1
+    for (let r=1;r<board.length;r++) {
+      if (board[r][c] && board[r][c] === playSymbol) {
+        adjSymbols++
+        if (adjSymbols === 4) {
+          console.log('col winner')
+          return board[r][c]
+        }
+      }
+      else {
+        playSymbol=board[r][c]
+        adjSymbols=1
+      }
+    }
+  }
+
+  console.log('no col winner')
+  return null
+}
+
+export const calculateWinnerOrig = (board: Board): Symbol | null =>
   board
     .concat(
       // vertical winner
