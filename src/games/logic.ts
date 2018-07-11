@@ -40,15 +40,18 @@ export const isValidTransition = (
 };
 
 export const calculateWinner = (board:Board): Symbol | null => {
+
+  let winnersLength = 4 //5
   console.log('calculate winner new')
   // Check rows
   for (let r=0;r<board.length;r++) {
+  //for (let r=board.length-1;r>0;r--) {
     let playSymbol=board[r][0]
     let adjSymbols=1
     for (let c=1;c<board[0].length;c++) {
       if (board[r][c] && board[r][c] === playSymbol) {
         adjSymbols++
-        if (adjSymbols === 4) {
+        if (adjSymbols === winnersLength) {
           console.log('row winner')
           return board[r][c]
         }
@@ -64,11 +67,13 @@ export const calculateWinner = (board:Board): Symbol | null => {
   // Check columns
   for (let c=0;c<board[0].length;c++) {
     let playSymbol=board[0][c]
+    //let playSymbol=board[board.length-1][c]
     let adjSymbols=1
     for (let r=1;r<board.length;r++) {
+    //for (let r=board.length-2;r>0;r--) {
       if (board[r][c] && board[r][c] === playSymbol) {
         adjSymbols++
-        if (adjSymbols === 4) {
+        if (adjSymbols === winnersLength) {
           console.log('col winner')
           return board[r][c]
         }
@@ -81,53 +86,61 @@ export const calculateWinner = (board:Board): Symbol | null => {
   }
   console.log('no col winner')
 
-  // Check diagonals left to right row 0 to 2
-  for (let r=0;r<=board.length-4;r++) {
-    let playSymbol=board[r][0]
+  // Check diagonals left to right
+  for (let r=0;r<=board.length-winnersLength;r++) {
+    for (let c=0;c<=board[0].length-winnersLength;c++) {
+    let playSymbol=board[r][c]
+    //console.log('row ',r,' col ', c, ' playSymbol ',playSymbol)
     let adjSymbols=1
-    for (let c=1;c<=board[0].length-4;c++) {
-      if (board[r+c][c] && board[r+c][c] === playSymbol) {
-        adjSymbols++
-        console.log(r+c,'row')
-        console.log(c,'col')
-        console.log(playSymbol,'playSymbol')
-        console.log(adjSymbols,'adjSymbols')
-        if (adjSymbols === 4) {
-          console.log('diagonal winner ltr')
-          return board[r+c][c]
+    for (let diagOffset=1;diagOffset<winnersLength;diagOffset++) {
+      if (board[r+diagOffset][c+diagOffset] && 
+          board[r+diagOffset][c+diagOffset] === playSymbol) {
+          adjSymbols++
+          // console.log(r+diagOffset,'row')
+          // console.log(c+diagOffset,'col')
+          // console.log(playSymbol,'playSymbol')
+          // console.log(adjSymbols,'adjSymbols')
+          if (adjSymbols === winnersLength) {
+            console.log('diagonal winner left to right')
+            return board[r+diagOffset][c+diagOffset]
+          }
         }
-      }
-      else {
-        playSymbol=board[r+c][c]
-        adjSymbols=1
+        else {
+          playSymbol=board[r+diagOffset][c+diagOffset]
+          adjSymbols=1
+        }
       }
     }
   }
 
-  // Check diagonals left to right col 1 to 3
-  for (let c=1;c<=board[0].length-4;c++) {
-    let playSymbol=board[0][c]
+  // Check diagonals right to left
+  for (let r=0;r<=board.length-winnersLength;r++) {
+    for (let c=winnersLength-1;c<board[0].length;c++) {
+    let playSymbol=board[r][c]
+    // console.log('row ',r,' col ', c, ' playSymbol ',playSymbol)
     let adjSymbols=1
-    for (let r=1;r<=board.length-4;r++) {
-      if (board[r][r+c] && board[r][r+c] === playSymbol) {
-        adjSymbols++
-        console.log(r,'row')
-        console.log(r+c,'col')
-        console.log(playSymbol,'playSymbol')
-        console.log(adjSymbols,'adjSymbols')
-        if (adjSymbols === 4) {
-          console.log('diagonal winner ltr')
-          return board[r][r+c]
+    for (let diagOffset=1;diagOffset<4;diagOffset++) {
+      if (board[r+diagOffset][c-diagOffset] && 
+          board[r+diagOffset][c-diagOffset] === playSymbol) {
+          adjSymbols++
+          // console.log(r+diagOffset,'row')
+          // console.log(c-diagOffset,'col')
+          // console.log(playSymbol,'playSymbol')
+          // console.log(adjSymbols,'adjSymbols')
+          if (adjSymbols === winnersLength) {
+            console.log('diagonal winner right to left')
+            return board[r+diagOffset][c-diagOffset]
+          }
         }
-      }
-      else {
-        playSymbol=board[r][r+c]
-        adjSymbols=1
+        else {
+          playSymbol=board[r+diagOffset][c-diagOffset]
+          adjSymbols=1
+        }
       }
     }
   }
 
-  console.log('no diagonal winner')
+  console.log('no (diagonal) winner')
 
   // No winner
   return null
