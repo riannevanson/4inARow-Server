@@ -2,7 +2,7 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface
 } from "class-validator";
-import { Board, Symbol, Row } from "./entities";
+import { Board, Symbol, Row, WinnerCells } from "./entities";
 
 @ValidatorConstraint()
 export class IsBoard implements ValidatorConstraintInterface {
@@ -39,14 +39,18 @@ export const isValidTransition = (
   );
 };
 
-export const calculateWinner = (board:Board): Symbol | null => {
+export const calculateWinner = (board:Board) => { //: Symbol | null => {
 
   let winnersLength = 4 //5
-  let winnerCells=[[9,9]] // dummy init needed!?
+  let winnerCells=[[0,0],[0,0],[0,0],[0,0]] // dummy init needed!?
   console.log('calculate winner new!')
+  // let winnerObj={
+  //   winner:board[0][0],
+  //   cells:[[0,0],[0,1],[0,2],[0,3]]
+  // }
+  // console.log(winnerObj)
   // Check rows
   for (let r=0;r<board.length;r++) {
-  //for (let r=board.length-1;r>0;r--) {
     let playSymbol=board[r][0]
     let adjSymbols=1
     winnerCells.splice(0,winnerCells.length)
@@ -58,7 +62,9 @@ export const calculateWinner = (board:Board): Symbol | null => {
         console.log(winnerCells)
         if (adjSymbols === winnersLength) {
           console.log("row winner");
-          return board[r][c];
+          //return board[r][c];
+          return ({winner:board[r][c],
+                  cells:winnerCells})
         }
       }
       else {
@@ -74,19 +80,19 @@ export const calculateWinner = (board:Board): Symbol | null => {
   // Check columns
   for (let c = 0; c < board[0].length; c++) {
     let playSymbol = board[0][c];
-    //let playSymbol=board[board.length-1][c]
     let adjSymbols=1
     winnerCells.splice(0,winnerCells.length)
     winnerCells.push([0,c])
     for (let r=1;r<board.length;r++) {
-    //for (let r=board.length-2;r>0;r--) {
       if (board[r][c] && board[r][c] === playSymbol) {
         adjSymbols++
         winnerCells.push([r,c])
         console.log(winnerCells)
         if (adjSymbols === winnersLength) {
           console.log("col winner");
-          return board[r][c];
+          //return board[r][c];
+          return ({winner:board[r][c],
+            cells:winnerCells})
         }
       }
       else {
@@ -119,7 +125,9 @@ export const calculateWinner = (board:Board): Symbol | null => {
           // console.log(adjSymbols,'adjSymbols')
           if (adjSymbols === winnersLength) {
             console.log("diagonal winner left to right");
-            return board[r + diagOffset][c + diagOffset];
+            //return board[r + diagOffset][c + diagOffset];
+            return ({winner:board[r + diagOffset][c + diagOffset],
+              cells:winnerCells})
           }
         }
         else {
@@ -152,7 +160,9 @@ export const calculateWinner = (board:Board): Symbol | null => {
           // console.log(adjSymbols,'adjSymbols')
           if (adjSymbols === winnersLength) {
             console.log("diagonal winner right to left");
-            return board[r + diagOffset][c - diagOffset];
+            //return board[r + diagOffset][c - diagOffset];
+            return ({winner:board[r + diagOffset][c - diagOffset],
+              cells:winnerCells})            
           }
         }
         else {
@@ -168,7 +178,10 @@ export const calculateWinner = (board:Board): Symbol | null => {
   console.log("no (diagonal) winner");
 
   // No winner
-  return null;
+  //return null;
+  return ({winner:null,
+           cells:[[null,null],[null,null],[null,null],[null,null]]
+          })
 };
 
 export const calculateWinnerOrig = (board: Board): Symbol | null =>
