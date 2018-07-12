@@ -5,14 +5,21 @@ import Chat from "./entities";
 
 @JsonController()
 export default class ChatController {
-  @Get("/chats/:id")
-  getChat(@Param("id") id: number) {
-    return Chat.findOne(id);
-  } //returns a promise so it sais 'not found"
+  //   @Get("/chats/:id")
+  //   getChat(@Param("id") id:number) {
+  //     return Chat.findOne(id);
+  //   }
 
-  @Get("/chat")
+  //   @Get("/chats/:id")
+  //   getChat(@Param("id") id) {
+  //     console.log(id, "id");
+  //     return Chat.findOneById(id);
+  //   }
+
+  @Get("/chats")
   async allChats() {
     const chats = await Chat.find();
+    console.log(chats, "chats");
     return { chats };
   }
 }
