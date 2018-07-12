@@ -12,17 +12,10 @@ import Chat from "./entities";
 
 @JsonController()
 export default class ChatController {
-<<<<<<< HEAD
-  //   @Get("/chats/:id")
-  //   getChat(@Param("id") id:number) {
-  //     return Chat.findOne(id);
-  //   }
-=======
   @Get("/chats/:id")
   getChat(@Param("id") id: number) {
     return Chat.findOneById(id);
   }
->>>>>>> 0113c7e38ab45af3b89c26e64dceb332e9feee6d
 
   //   @Get("/chats/:id")
   //   getChat(@Param("id") id) {
