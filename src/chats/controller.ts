@@ -14,9 +14,14 @@ import Chat from "./entities";
 export default class ChatController {
   @Get("/chats/:id")
   getChat(@Param("id") id: number) {
-    console.log(id, "id");
     return Chat.findOneById(id);
   }
+
+  //   @Get("/chats/:id")
+  //   getChat(@Param("id") id) {
+  //     console.log(id, "id");
+  //     return Chat.findOneById(id);
+  //   }
 
   @Get("/chats")
   async allChats() {

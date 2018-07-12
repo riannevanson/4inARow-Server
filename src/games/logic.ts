@@ -39,25 +39,33 @@ export const isValidTransition = (
   );
 };
 
-export const calculateWinner = (board: Board): Symbol | null => {
-  let winnersLength = 4; //5
-  // let winnerCells=[]
-  // console.log('calculate winner new')
+export const calculateWinner = (board:Board): Symbol | null => {
+
+  let winnersLength = 4 //5
+  let winnerCells=[[9,9]] // dummy init needed!?
+  console.log('calculate winner new!')
   // Check rows
-  for (let r = 0; r < board.length; r++) {
-    //for (let r=board.length-1;r>0;r--) {
-    let playSymbol = board[r][0];
-    let adjSymbols = 1;
-    for (let c = 1; c < board[0].length; c++) {
+  for (let r=0;r<board.length;r++) {
+  //for (let r=board.length-1;r>0;r--) {
+    let playSymbol=board[r][0]
+    let adjSymbols=1
+    winnerCells.splice(0,winnerCells.length)
+    winnerCells.push([r,0])
+    for (let c=1;c<board[0].length;c++) {
       if (board[r][c] && board[r][c] === playSymbol) {
-        adjSymbols++;
+        adjSymbols++
+        winnerCells.push([r,c])
+        console.log(winnerCells)
         if (adjSymbols === winnersLength) {
           console.log("row winner");
           return board[r][c];
         }
-      } else {
-        playSymbol = board[r][c];
-        adjSymbols = 1;
+      }
+      else {
+        playSymbol=board[r][c]
+        adjSymbols=1
+        winnerCells.splice(0,winnerCells.length)
+        winnerCells.push([r,c])
       }
     }
   }
@@ -67,35 +75,44 @@ export const calculateWinner = (board: Board): Symbol | null => {
   for (let c = 0; c < board[0].length; c++) {
     let playSymbol = board[0][c];
     //let playSymbol=board[board.length-1][c]
-    let adjSymbols = 1;
-    for (let r = 1; r < board.length; r++) {
-      //for (let r=board.length-2;r>0;r--) {
+    let adjSymbols=1
+    winnerCells.splice(0,winnerCells.length)
+    winnerCells.push([0,c])
+    for (let r=1;r<board.length;r++) {
+    //for (let r=board.length-2;r>0;r--) {
       if (board[r][c] && board[r][c] === playSymbol) {
-        adjSymbols++;
+        adjSymbols++
+        winnerCells.push([r,c])
+        console.log(winnerCells)
         if (adjSymbols === winnersLength) {
           console.log("col winner");
           return board[r][c];
         }
-      } else {
-        playSymbol = board[r][c];
-        adjSymbols = 1;
+      }
+      else {
+        playSymbol=board[r][c]
+        adjSymbols=1
+        winnerCells.splice(0,winnerCells.length)
+        winnerCells.push([r,c])
       }
     }
   }
   console.log("no col winner");
 
   // Check diagonals left to right
-  for (let r = 0; r <= board.length - winnersLength; r++) {
-    for (let c = 0; c <= board[0].length - winnersLength; c++) {
-      let playSymbol = board[r][c];
-      //console.log('row ',r,' col ', c, ' playSymbol ',playSymbol)
-      let adjSymbols = 1;
-      for (let diagOffset = 1; diagOffset < winnersLength; diagOffset++) {
-        if (
-          board[r + diagOffset][c + diagOffset] &&
-          board[r + diagOffset][c + diagOffset] === playSymbol
-        ) {
-          adjSymbols++;
+  for (let r=0;r<=board.length-winnersLength;r++) {
+    for (let c=0;c<=board[0].length-winnersLength;c++) {
+    let playSymbol=board[r][c]
+    //console.log('row ',r,' col ', c, ' playSymbol ',playSymbol)
+    let adjSymbols=1
+    winnerCells.splice(0,winnerCells.length)
+    winnerCells.push([r,c])
+    for (let diagOffset=1;diagOffset<winnersLength;diagOffset++) {
+      if (board[r+diagOffset][c+diagOffset] && 
+          board[r+diagOffset][c+diagOffset] === playSymbol) {
+          adjSymbols++
+          winnerCells.push([r+diagOffset,c+diagOffset])
+          console.log(winnerCells)
           // console.log(r+diagOffset,'row')
           // console.log(c+diagOffset,'col')
           // console.log(playSymbol,'playSymbol')
@@ -104,26 +121,31 @@ export const calculateWinner = (board: Board): Symbol | null => {
             console.log("diagonal winner left to right");
             return board[r + diagOffset][c + diagOffset];
           }
-        } else {
-          playSymbol = board[r + diagOffset][c + diagOffset];
-          adjSymbols = 1;
+        }
+        else {
+          playSymbol=board[r+diagOffset][c+diagOffset]
+          adjSymbols=1
+          winnerCells.splice(0,winnerCells.length)
+          winnerCells.push([r+diagOffset,c+diagOffset])
         }
       }
     }
   }
 
   // Check diagonals right to left
-  for (let r = 0; r <= board.length - winnersLength; r++) {
-    for (let c = winnersLength - 1; c < board[0].length; c++) {
-      let playSymbol = board[r][c];
-      // console.log('row ',r,' col ', c, ' playSymbol ',playSymbol)
-      let adjSymbols = 1;
-      for (let diagOffset = 1; diagOffset < 4; diagOffset++) {
-        if (
-          board[r + diagOffset][c - diagOffset] &&
-          board[r + diagOffset][c - diagOffset] === playSymbol
-        ) {
-          adjSymbols++;
+  for (let r=0;r<=board.length-winnersLength;r++) {
+    for (let c=winnersLength-1;c<board[0].length;c++) {
+    let playSymbol=board[r][c]
+    // console.log('row ',r,' col ', c, ' playSymbol ',playSymbol)
+    let adjSymbols=1
+    winnerCells.splice(0,winnerCells.length)
+    winnerCells.push([r,c])
+    for (let diagOffset=1;diagOffset<4;diagOffset++) {
+      if (board[r+diagOffset][c-diagOffset] && 
+          board[r+diagOffset][c-diagOffset] === playSymbol) {
+          adjSymbols++
+          winnerCells.push([r+diagOffset,c-diagOffset])
+          console.log(winnerCells)
           // console.log(r+diagOffset,'row')
           // console.log(c-diagOffset,'col')
           // console.log(playSymbol,'playSymbol')
@@ -132,9 +154,12 @@ export const calculateWinner = (board: Board): Symbol | null => {
             console.log("diagonal winner right to left");
             return board[r + diagOffset][c - diagOffset];
           }
-        } else {
-          playSymbol = board[r + diagOffset][c - diagOffset];
-          adjSymbols = 1;
+        }
+        else {
+          playSymbol=board[r+diagOffset][c-diagOffset]
+          adjSymbols=1
+          winnerCells.splice(0,winnerCells.length)
+          winnerCells.push([r+diagOffset,c-diagOffset])
         }
       }
     }
