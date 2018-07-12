@@ -8,6 +8,7 @@ import {
   ManyToOne
 } from "typeorm";
 import User from "../users/entity";
+import Chat from "../chats/entities";
 
 export type Symbol = "x" | "o";
 export type Row = [
@@ -53,6 +54,9 @@ export class Game extends BaseEntity {
   // http://typeorm.io/#/many-to-one-one-to-many-relations
   @OneToMany(_ => Player, player => player.game, { eager: true })
   players: Player[];
+
+  @OneToMany(_ => Chat, chat => chat.game, { eager: true })
+  chats: Chat[];
 }
 
 @Entity()
