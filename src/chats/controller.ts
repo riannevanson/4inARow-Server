@@ -26,13 +26,13 @@ export default class ChatController {
     return { chats };
   }
 
-  @Post("/chats")
+  @Post("/games/:id([0-9]+)/chats")
   @HttpCode(201)
   createMessage(@Body() chat: Chat) {
     return chat.save();
   }
 
-  @Put("/chats/:id")
+  @Put("/games/:id([0-9]+)/chats")
   async updateChat(@Param("id") id: number, @Body() update: Partial<Chat>) {
     const chat = await Chat.findOneById(id);
     if (!chat) throw new NotFoundError("Cannot find chat");
