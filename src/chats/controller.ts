@@ -5,7 +5,9 @@ import {
   Param,
   Post,
   HttpCode,
-  Body
+  Body,
+  Put,
+  NotFoundError
 } from "routing-controllers";
 import Chat from "./entities";
 // import User from "../users/entity";
@@ -16,12 +18,6 @@ export default class ChatController {
   getChat(@Param("id") id: number) {
     return Chat.findOneById(id);
   }
-
-  //   @Get("/chats/:id")
-  //   getChat(@Param("id") id) {
-  //     console.log(id, "id");
-  //     return Chat.findOneById(id);
-  //   }
 
   @Get("/chats")
   async allChats() {
@@ -34,5 +30,13 @@ export default class ChatController {
   @HttpCode(201)
   createMessage(@Body() chat: Chat) {
     return chat.save();
+  }
+
+  @Put("/chats/:id")
+  async updateChat(@Param("id") id: number, @Body() update: Partial<Chat>) {
+    const chat = await Chat.findOneById(id);
+    if (!chat) throw new NotFoundError("Cannot find chat");
+
+    return Chat.merge(chat, update).save();
   }
 }
