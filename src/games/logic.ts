@@ -57,8 +57,8 @@ export const calculateWinner = (board:Board): Symbol | null => {
         winnerCells.push([r,c])
         console.log(winnerCells)
         if (adjSymbols === winnersLength) {
-          console.log('row winner')
-          return board[r][c]
+          console.log("row winner");
+          return board[r][c];
         }
       }
       else {
@@ -69,11 +69,11 @@ export const calculateWinner = (board:Board): Symbol | null => {
       }
     }
   }
-  console.log('no row winner')
+  console.log("no row winner");
 
   // Check columns
-  for (let c=0;c<board[0].length;c++) {
-    let playSymbol=board[0][c]
+  for (let c = 0; c < board[0].length; c++) {
+    let playSymbol = board[0][c];
     //let playSymbol=board[board.length-1][c]
     let adjSymbols=1
     winnerCells.splice(0,winnerCells.length)
@@ -85,8 +85,8 @@ export const calculateWinner = (board:Board): Symbol | null => {
         winnerCells.push([r,c])
         console.log(winnerCells)
         if (adjSymbols === winnersLength) {
-          console.log('col winner')
-          return board[r][c]
+          console.log("col winner");
+          return board[r][c];
         }
       }
       else {
@@ -97,7 +97,7 @@ export const calculateWinner = (board:Board): Symbol | null => {
       }
     }
   }
-  console.log('no col winner')
+  console.log("no col winner");
 
   // Check diagonals left to right
   for (let r=0;r<=board.length-winnersLength;r++) {
@@ -118,8 +118,8 @@ export const calculateWinner = (board:Board): Symbol | null => {
           // console.log(playSymbol,'playSymbol')
           // console.log(adjSymbols,'adjSymbols')
           if (adjSymbols === winnersLength) {
-            console.log('diagonal winner left to right')
-            return board[r+diagOffset][c+diagOffset]
+            console.log("diagonal winner left to right");
+            return board[r + diagOffset][c + diagOffset];
           }
         }
         else {
@@ -151,8 +151,8 @@ export const calculateWinner = (board:Board): Symbol | null => {
           // console.log(playSymbol,'playSymbol')
           // console.log(adjSymbols,'adjSymbols')
           if (adjSymbols === winnersLength) {
-            console.log('diagonal winner right to left')
-            return board[r+diagOffset][c-diagOffset]
+            console.log("diagonal winner right to left");
+            return board[r + diagOffset][c - diagOffset];
           }
         }
         else {
@@ -165,11 +165,11 @@ export const calculateWinner = (board:Board): Symbol | null => {
     }
   }
 
-  console.log('no (diagonal) winner')
+  console.log("no (diagonal) winner");
 
   // No winner
-  return null
-}
+  return null;
+};
 
 export const calculateWinnerOrig = (board: Board): Symbol | null =>
   board
