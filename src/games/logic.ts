@@ -42,6 +42,7 @@ export const isValidTransition = (
 export const calculateWinner = (board:Board): Symbol | null => {
 
   let winnersLength = 4 //5
+  let winnerCells=[]
   console.log('calculate winner new')
   // Check rows
   for (let r=0;r<board.length;r++) {
