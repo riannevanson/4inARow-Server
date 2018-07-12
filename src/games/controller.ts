@@ -73,17 +73,17 @@ export default class GameController {
       symbol: "o"
     }).save();
 
-    // await Chat.create({
-    //   game,
-    //   user
-    // }).save();
+    const chat = await Chat.create({
+      game,
+      user
+    }).save();
 
     io.emit("action", {
       type: "UPDATE_GAME",
       payload: await Game.findOneById(game.id)
     });
 
-    return player;
+    return { player, chat };
   }
 
   @Authorized()

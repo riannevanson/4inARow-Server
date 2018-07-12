@@ -8,7 +8,7 @@ import { Game } from "../games/entities";
 export default class Chat extends BaseEntity {
   @PrimaryGeneratedColumn() id?: number;
 
-  @Column("text", { nullable: false })
+  @Column("text", { nullable: true })
   message: string;
 
   @ManyToOne(_ => User, user => user.chats)
