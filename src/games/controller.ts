@@ -110,10 +110,14 @@ export default class GameController {
       throw new BadRequestError(`Invalid move`);
     }
 
-    const winner = calculateWinner(update.board);
-    if (winner) {
-      game.winner = winner;
+    const winnerObj = calculateWinner(update.board);
+    // console.log(winnerObj,'winnerObj')
+    // console.log(winnerObj.cells,'winnerObj.cells')
+    if (winnerObj.winner) {
+      game.winner = winnerObj.winner;
       game.status = "finished";
+      //game.winnerCells = [[null,null],[null,null],[null,null],[null,null]]
+      game.winnerCells = winnerObj.cells
     } else if (finished(update.board)) {
       game.status = "finished";
     } else {
