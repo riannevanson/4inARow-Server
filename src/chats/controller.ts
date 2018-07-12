@@ -29,6 +29,7 @@ export default class ChatController {
     console.log(chats, "chats");
     return { chats };
   }
+
   @Post("/chats")
   @HttpCode(201)
   createMessage(@Body() chat: Chat) {
