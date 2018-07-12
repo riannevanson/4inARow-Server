@@ -12,7 +12,7 @@ export default class Chat extends BaseEntity {
   message: string;
 
   @ManyToOne(_ => User, user => user.chats)
-  user: User;
+  user: User; // moet misschien player zijn
 
   @ManyToOne(_ => Game, game => game.chats)
   game: Game;
