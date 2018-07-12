@@ -73,10 +73,10 @@ export default class GameController {
       symbol: "o"
     }).save();
 
-    await Chat.create({
-      game,
-      user
-    }).save();
+    // await Chat.create({
+    //   game,
+    //   user
+    // }).save();
 
     io.emit("action", {
       type: "UPDATE_GAME",
@@ -117,7 +117,7 @@ export default class GameController {
       game.winner = winnerObj.winner;
       game.status = "finished";
       //game.winnerCells = [[null,null],[null,null],[null,null],[null,null]]
-      game.winnerCells = winnerObj.cells
+      game.winnerCells = winnerObj.cells;
     } else if (finished(update.board)) {
       game.status = "finished";
     } else {
