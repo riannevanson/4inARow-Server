@@ -17,6 +17,7 @@ import { Game, Player, Board } from "./entities";
 import { IsBoard, isValidTransition, calculateWinner, finished } from "./logic";
 import { Validate } from "class-validator";
 import { io } from "../index";
+import Chat from "../chats/entities";
 
 class GameUpdate {
   @Validate(IsBoard, {
@@ -37,6 +38,11 @@ export default class GameController {
       game: entity,
       user,
       symbol: "x"
+    }).save();
+
+    await Chat.create({
+      game: entity,
+      user
     }).save();
 
     const game = await Game.findOneById(entity.id);
