@@ -6,7 +6,7 @@ import Chat from "./entities";
 @JsonController()
 export default class ChatController {
   @Get("/chats/:id")
-  getChat(@Param("id") id: number) {
+  getChat(@Param("id") id) {
     return Chat.findOne(id);
   } //returns a promise so it sais 'not found"
 
