@@ -35,13 +35,16 @@ const emptyBoard: Board = [
 ];
 
 export type Index = 0 | 1 | 2 | 3 | 4 | 5 | 6;
-export type CellInfo = [Index | null, Index | null]
+export type CellInfo = [Index | null, Index | null];
 export type WinnerCells = [CellInfo, CellInfo, CellInfo, CellInfo];
 
-const emptyCellInfo: CellInfo = [null,null]
+const emptyCellInfo: CellInfo = [null, null];
 const emptyWinnerCells: WinnerCells = [
-  emptyCellInfo,emptyCellInfo,emptyCellInfo,emptyCellInfo
-]
+  emptyCellInfo,
+  emptyCellInfo,
+  emptyCellInfo,
+  emptyCellInfo
+];
 
 @Entity()
 export class Game extends BaseEntity {
@@ -60,7 +63,7 @@ export class Game extends BaseEntity {
   status: Status;
 
   @Column("json", { default: emptyWinnerCells })
-  winnerCells: any //WinnerCells;
+  winnerCells: any; //WinnerCells;
 
   // this is a relation, read more about them here:
   // http://typeorm.io/#/many-to-one-one-to-many-relations
