@@ -42,7 +42,8 @@ export default class GameController {
 
     await Chat.create({
       game: entity,
-      user
+      user,
+      message: ""
     }).save();
 
     const game = await Game.findOneById(entity.id);
@@ -75,7 +76,8 @@ export default class GameController {
 
     const chat = await Chat.create({
       game,
-      user
+      user,
+      message: ""
     }).save();
 
     io.emit("action", {
