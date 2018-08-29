@@ -1,6 +1,8 @@
-# Tic Tac Toe Server
+# 4 in a Row game
 
-This is a server for playing a multiplayer Tic Tac Toe game. 
+made out of a Tic Tac Toe Server template
+
+This is a server for playing a multiplayer 4 in a row game. 
 
 It has these endpoints:
 
